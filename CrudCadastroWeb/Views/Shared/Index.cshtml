@@ -1,0 +1,71 @@
+﻿@model IEnumerable<CrudCadastroWeb.Models.Usuario>
+
+<head>
+    <link href="~/css/styles.css" rel="stylesheet" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Lista de Usuários</h1>
+
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success" role="alert">
+                @TempData["SuccessMessage"]
+            </div>
+        }
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger" role="alert">
+                @TempData["ErrorMessage"]
+            </div>
+        }
+
+        <table class="table table-hover table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                    <th>RG</th>
+                    <th>Email</th>
+                    <th>Endereço</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model == null || !Model.Any())
+                {
+                    <tr>
+                        <td colspan="6" class="text-center">Nenhum usuário encontrado.</td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var usuario in Model)
+                    {
+                        <tr>
+                            <td>@usuario.Nome</td>
+                            <td>@usuario.CPF</td>
+                            <td>@usuario.RG</td>
+                            <td>@usuario.Email</td>
+                            <td>@usuario.Endereco</td>
+                            <td>
+                                <a class="btn btn-sm btn-primary" href="@Url.Action("Edit", "Usuarios", new { id = usuario.Id })">Editar</a>
+                                <a class="btn btn-sm btn-danger" href="@Url.Action("Delete", "Usuarios", new { id = usuario.Id })">Excluir</a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
+        <a class="btn btn-success" href="@Url.Action("Create", "Usuarios")">Novo Usuário</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
